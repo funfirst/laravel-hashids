@@ -30,10 +30,35 @@ trait HasHashid
         return $prefix . '_' . $ts;
     }
 
-    public function objectid()
+    public function objectId()
 	{
 		return $this->getPrefix() . self::idToHash($this->getKey());
 	}
+
+    public function objectIdToId(string $objectId): int
+    {
+        $prefix = $this->getPrefix();
+        return self::hashToId(Str::after($objectId, $prefix));
+    }
+
+    /**
+     * Get Model by hash.
+     *
+     * @param $hash
+     *
+     * @return self|null
+     */
+    public static function byObjectId($objectId): ?self
+    {
+        return self::query()->byObjectId($objectId)->first();
+    }
+
+    public function scopeByObjectId(Builder $query, string $objectId): Builder
+    {
+        return  $this->shouldHashPersist()
+            ? $query->where($this->qualifyColumn($this->getHashColumnName()), $objectId)
+            : $query->where($this->getQualifiedKeyName(), $this->objectIdToId($objectId));
+    }
 
     /**
      * Get Model by hashed key.

@@ -25,7 +25,7 @@ trait HasHashidRouting
             return parent::resolveRouteBinding($value, $field);
         }
 
-        return $this->byHash($value);
+        return $this->byObjectId($value);
     }
 
 	/**
