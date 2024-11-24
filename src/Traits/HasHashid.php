@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use InvalidArgumentException;
 use LogicException;
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Support\Str;
 
 /**
  * @method Model|null findByHashid($hashid)
@@ -17,6 +18,22 @@ use Vinkla\Hashids\Facades\Hashids;
  */
 trait HasHashid 
 {
+
+    public function getPrefix(): string
+    {
+        $prefix = property_exists($this, 'idPrefix')
+            ? $this->idPrefix
+            : Str::snake(class_basename($this));
+
+        $ts = $this->created_at ? base_convert($this->created_at->timestamp * 10000000, 10, 36) : '';
+
+        return $prefix . '_' . $ts;
+    }
+
+    public function objectid()
+	{
+		return $this->getPrefix() . self::idToHash($this->getKey());
+	}
 
     /**
      * Get Model by hashed key.
