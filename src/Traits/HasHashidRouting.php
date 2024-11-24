@@ -25,6 +25,10 @@ trait HasHashidRouting
             return parent::resolveRouteBinding($value, $field);
         }
 
+        if (!str_starts_with($value, $this->getPrefix())) {
+            return null;
+        }
+
         return $this->byObjectId($value);
     }
 

@@ -4,7 +4,7 @@ return [
     /*
      * Determine how many characters HashId should generate.
      */
-    'hash_length' => env('HASHID_LENGTH', 18),
+    'hash_length' => env('HASHID_LENGTH', 16),
 
     /*
      * Determine HashId characters set.
