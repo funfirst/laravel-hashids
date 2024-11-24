@@ -38,7 +38,7 @@ trait HasHashid
     public function objectIdToId(string $objectId): int
     {
         $prefix = $this->getPrefix();
-        $hash = substr($timestampWithHash, -config('hashids.hash_length'));
+        $hash = substr($objectId, -config('hashids.hash_length'));
         return self::hashToId($hash);
     }
 
