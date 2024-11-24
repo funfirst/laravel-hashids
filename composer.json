@@ -1,12 +1,12 @@
 {
-    "name": "veelasky/laravel-hashid",
+    "name": "funfirst/laravel-hashid",
     "description": "HashId Implementation on Laravel Eloquent ORM",
     "keywords": [ "laravel", "lumen", "eloquent", "hashid", "hashids" ],
     "license": "MIT",
     "authors": [
         {
-            "name": "Rifki Alhuraibi",
-            "email": "veelasky@pm.com"
+            "name": "George",
+            "email": "george@funfirst.com"
         }
     ],
     "require": {
@@ -25,7 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Veelasky\\LaravelHashId\\": "src"
+            "FF\\LaravelHashids\\": "src"
         }
     },
     "autoload-dev": {
@@ -38,10 +38,10 @@
     "extra": {
         "laravel" : {
             "providers" : [
-                "Veelasky\\LaravelHashId\\HashIdServiceProvider"
+                "FF\\LaravelHashids\\FFHashidsServiceProvider"
             ],
             "aliases" : {
-                "HashId" : "Veelasky\\LaravelHashId\\Facade"
+                "HashId" : "FF\\LaravelHashids\\Facade"
             }
         },
         "branch-alias": {
