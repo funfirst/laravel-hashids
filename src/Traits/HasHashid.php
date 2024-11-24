@@ -35,7 +35,7 @@ trait HasHashid
 
     public function hashid()
 	{
-		return $this->idToHash($this->getKey());
+		return self::idToHash($this->getKey());
 	}
 
     /**
