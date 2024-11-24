@@ -38,8 +38,8 @@ trait HasHashid
     public function objectIdToId(string $objectId): int
     {
         $prefix = $this->getPrefix();
-        Log::info($prefix);
-        Log::info(Str::after($objectId, $prefix));
+        Log::debug($prefix);
+        Log::debug(Str::after($objectId, $prefix));
         return self::hashToId(Str::after($objectId, $prefix));
     }
 
