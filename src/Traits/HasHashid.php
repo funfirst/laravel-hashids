@@ -33,7 +33,11 @@ trait HasHashid
             : $query->where($this->getQualifiedKeyName(), self::hashToId($hash));
     }
 
-    /**
+    public function hashid()
+	{
+		return $this->idToHash($this->getKey());
+	}
+
     /**
      * Get Model by hash.
      *

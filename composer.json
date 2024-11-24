@@ -1,5 +1,5 @@
 {
-    "name": "funfirst/laravel-hashid",
+    "name": "funfirst/laravel-hashids",
     "description": "HashId Implementation on Laravel Eloquent ORM",
     "keywords": [ "laravel", "lumen", "eloquent", "hashid", "hashids" ],
     "license": "MIT",
@@ -45,7 +45,7 @@
             }
         },
         "branch-alias": {
-            "dev-master": "4.0.x-dev"
+            "dev-master": "1.0.x-dev"
         }
     }
 }

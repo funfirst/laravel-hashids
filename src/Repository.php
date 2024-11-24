@@ -38,7 +38,7 @@ class Repository implements RepositoryContract, ArrayAccess
     /** {@inheritdoc} */
     public function make(string $key, string $salt): Hashids
     {
-        $hashids = new Hashids($salt, config('hashid.hash_length'), config('hashid.hash_alphabet'));
+        $hashids = new Hashids($salt, config('hashids.hash_length'), config('hashids.hash_alphabet'));
         $this->set($key, $hashids);
 
         return $hashids;
@@ -62,13 +62,13 @@ class Repository implements RepositoryContract, ArrayAccess
         if ($key === 'default') {
             return $this->make(
                 $key,
-                config('hashid.hash_salt') ? config('hashid.hash_salt') : substr(config('app.key', config('hashid.hash_alphabet')), 8, 4).substr(config('app.key', 'lara'), -4)
+                config('hashids.hash_salt') ? config('hashids.hash_salt') : substr(config('app.key', config('hashids.hash_alphabet')), 8, 4).substr(config('app.key', 'lara'), -4)
             );
         }
 
         $key = strlen($key) > 4 ? $key : 'default'.$key;
 
-        return $this->make($key, config('hashid.hash_salt') ? config('hashid.hash_salt') : substr($key, -4).substr(config('app.key', 'lara'), -4));
+        return $this->make($key, config('hashids.hash_salt') ? config('hashids.hash_salt') : substr($key, -4).substr(config('app.key', 'lara'), -4));
     }
 
     /** {@inheritdoc} */

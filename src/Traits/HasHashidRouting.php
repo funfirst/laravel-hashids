@@ -16,84 +16,32 @@ use Vinkla\Hashids\Facades\Hashids;
 trait HasHashidRouting 
 {
 
-    /**
-     * Get Model by hashed key.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string                                $hash
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
+     /**
+     * @see parent
      */
-    public function scopeByHash(Builder $query, string $hash): Builder
+    public function resolveRouteBinding($query, $value, $field = null)
     {
-        return  $this->shouldHashPersist()
-            ? $query->where($this->qualifyColumn($this->getHashColumnName()), $hash)
-            : $query->where($this->getQualifiedKeyName(), self::hashToId($hash));
+        if (($field && $field === $this->getHashColumnName()) || is_numeric($value)) {
+            return parent::resolveRouteBinding($value, $field);
+        }
+
+        return $this->byHash($value);
     }
 
-    /**
-     * Determine if hash should persist in database.
-     *
-     * @return bool
-     */
-    public function shouldHashPersist(): bool
-    {
-        return property_exists($this, 'shouldHashPersist')
-            ? $this->shouldHashPersist
-            : false;
-    }
-
-
-
-
-
-
-
-
-
-
-	public static function bootHasHashid()
+	/**
+	 * @see parent
+	 */
+	public function getRouteKey()
 	{
-		static::addGlobalScope(new HashidScope);
-	}
-
-	public function hashid()
-	{
-		return $this->idToHashid($this->getKey());
+		return $this->hashid();
 	}
 
 	/**
-	 * Decode the hashid to the id
-	 *
-	 * @param string $hashid
-	 * @return int|null
+	 * @see parent
 	 */
-	public function hashidToId($hashid)
+	public function getRouteKeyName()
 	{
-		return @Hashids::connection($this->getHashidsConnection())
-			->decode($hashid)[0];
+		return null;
 	}
-
-	/**
-	 * Encode an id to its equivalent hashid
-	 *
-	 * @param string $id
-	 * @return string|null
-	 */
-	public function idToHashid($id)
-	{
-		return @Hashids::connection($this->getHashidsConnection())
-			->encode($id);
-	}
-
-	public function getHashidsConnection()
-	{
-		return config('hashids.default');
-	}
-
-	protected function getHashidAttribute()
-    {
-        return $this->hashid();
-    }
 
 }

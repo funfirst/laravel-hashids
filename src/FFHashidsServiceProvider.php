@@ -27,8 +27,8 @@ class FFHashidsServiceProvider extends LaravelServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/hashid.php',
-            'hashid'
+            __DIR__.'/../config/hashids.php',
+            'hashids'
         );
 
         $this->app->singleton('app.hashid', function () {
