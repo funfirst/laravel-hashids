@@ -11,7 +11,7 @@ use InvalidArgumentException;
 use LogicException;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Log;
 /**
  * @method Model|null findByHashid($hashid)
  * @method Model findByHashidOrFail($hashid)
@@ -38,6 +38,8 @@ trait HasHashid
     public function objectIdToId(string $objectId): int
     {
         $prefix = $this->getPrefix();
+        Log::info($prefix);
+        Log::info(Str::after($objectId, $prefix));
         return self::hashToId(Str::after($objectId, $prefix));
     }
 
