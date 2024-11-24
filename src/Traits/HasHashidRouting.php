@@ -19,7 +19,7 @@ trait HasHashidRouting
      /**
      * @see parent
      */
-    public function resolveRouteBinding($query, $value, $field = null)
+    public function resolveRouteBinding($value, $field = null)
     {
         if (($field && $field === $this->getHashColumnName()) || is_numeric($value)) {
             return parent::resolveRouteBinding($value, $field);
