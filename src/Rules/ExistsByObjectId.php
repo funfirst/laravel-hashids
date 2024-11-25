@@ -11,7 +11,7 @@ use Illuminate\Validation\Validator;
 use InvalidArgumentException;
 use FF\LaravelHashids\Traits\HasHashid;
 
-class ExistsByHash extends Exists implements ValidationRule, ValidatorAwareRule
+class ExistsByObjectId extends Exists implements ValidationRule, ValidatorAwareRule
 {
     /** @var Model&HasHashid */
     protected Model $model;
@@ -33,7 +33,7 @@ class ExistsByHash extends Exists implements ValidationRule, ValidatorAwareRule
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!$value || (!$this->model->shouldHashPersist() && !$value = $this->model::hashToId($value))) {
+        if (!$value || (!$this->model->shouldHashPersist() && !$value = $this->model::objectIdToId($value))) {
             $this->fail($attribute, $fail);
 
             return;
@@ -66,7 +66,7 @@ class ExistsByHash extends Exists implements ValidationRule, ValidatorAwareRule
 
     protected function fail(string $attribute, Closure $fail): void
     {
-        $fail($this->validator->customMessages["{$attribute}.existsByHash"] ?? 'validation.exists')
+        $fail($this->validator->customMessages["{$attribute}.existsByObjectId"] ?? 'validation.exists')
             ->translate([
                 'attribute' => $this->validator->getDisplayableAttribute($attribute),
             ]);

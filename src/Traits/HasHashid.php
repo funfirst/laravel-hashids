@@ -35,9 +35,8 @@ trait HasHashid
 		return $this->getPrefix() . self::idToHash($this->getKey());
 	}
 
-    public function objectIdToId(string $objectId): int
+    public static function objectIdToId(string $objectId): int
     {
-        $prefix = $this->getPrefix();
         $hash = substr($objectId, -config('hashids.hash_length'));
         return self::hashToId($hash);
     }
@@ -58,7 +57,7 @@ trait HasHashid
     {
         return  $this->shouldHashPersist()
             ? $query->where($this->qualifyColumn($this->getHashColumnName()), $objectId)
-            : $query->where($this->getQualifiedKeyName(), $this->objectIdToId($objectId));
+            : $query->where($this->getQualifiedKeyName(), self::objectIdToId($objectId));
     }
 
     /**
